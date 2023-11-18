@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Member{
+  id Int @id @default(autoincrement())
+  email String @unique @db.VarChar(100)
+  username String @db.VarChar(100)
+  password String @db.VarChar(100)
+  usia String @db.VarChar(3)
+  no_telepon String @db.VarChar(13)
+  token String? @db.VarChar(100)
+  keranjang Keranjang[]
+
+  @@map("members")
+}
+
+model Keranjang{
+  id Int @id @default(autoincrement())
+  nama String @db.VarChar(100)
+  tanggal DateTime @db.DateTime()
+  total String? @db.VarChar(30)
+  member_id Int @db.Int
+  member Member @relation(fields: [member_id], references: [id])
+  Bahan BahanOnKeranjang[]
+  @@map("keranjang")
+}
+
+model Bahan{
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(50)
+  image String @db.VarChar(250)
+  keranjang BahanOnKeranjang[]
+
+  @@map("bahan")
+}
+
+model BahanOnKeranjang{
+  keranjang_id Int
+  bahan_id Int
+  keranjang Keranjang @relation(fields: [keranjang_id],references: [id])
+  bahan Bahan @relation(fields: [bahan_id],references: [id])
+
+  @@id([keranjang_id,bahan_id])
+}
