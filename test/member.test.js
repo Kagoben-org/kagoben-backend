@@ -6,14 +6,15 @@ import { prismaClient } from "../src/app/database"
 
 describe('POST /api/member', () => {
 
-  // afterEach(async () => {
-  //   await prismaClient.member.delete({
-  //     where: {
-  //       id:1
-  //       email: "daffa@gmail.com"
-  //     }
-  //   })
-  // })
+  afterEach(async () => {
+    await prismaClient.member.delete({
+      where: {
+        id: 1,
+        email: "daffa@gmail.com"
+      }
+    })
+  })
+
   it('should can register new member', async () => {
     const result = await supertest(web)
       .post('/api/member')

@@ -76,7 +76,7 @@ const logout = async (email) => {
       token: null
     },
     select: {
-      usernam: true
+      email: true
     }
   })
 }
