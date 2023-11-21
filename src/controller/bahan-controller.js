@@ -10,7 +10,7 @@ const addBahan = async (req, res, next) => {
   }
 }
 
-const getAllBahan = async (req, res, next) => {
+const getAllBahan = async (_req, res, next) => {
   try {
     const result = await bahanService.getAllBahan()
     res.status(200).json({

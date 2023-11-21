@@ -1,25 +1,23 @@
-import { prismaClient } from "../app/database"
+import { prismaClient } from "../app/database.js"
 
 export const authMiddleware = async (req, res, next) => {
   const token = req.get("Authorization")
-
   if (!token) {
     res.status(401).json({
       errors: "Unauthorized"
     }).end()
   } else {
-    const user = await prismaClient.member.findFirst({
+    const member = await prismaClient.member.findFirst({
       where: {
-        token: token
+        token: token.split(" ")[1]
       }
     })
-
-    if (!user) {
+    if (!member) {
       res.status(401).json({
         errors: "Unauthorized"
       }).end()
     } else {
-      req.user = user;
+      req.member = member;
       next()
     }
   }

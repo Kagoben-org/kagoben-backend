@@ -1,6 +1,6 @@
 import { prismaClient } from "../app/database.js"
 import { ResponseError } from "../error/response-error.js"
-import { bahanValidation, searchBahanValidation } from "../validation/bahan-validation.js"
+import { bahanValidation, getSearchBahanValidation, } from "../validation/bahan-validation.js"
 import { validate } from "../validation/validation.js"
 
 
@@ -26,18 +26,16 @@ const addBahan = async (request) => {
 
 
 const getAllBahan = async () => {
-  const bahans = await prismaClient.bahan.findMany()
-  return bahans;
+  return await prismaClient.bahan.findMany()
 }
 
 
 const searchBahan = async (namaBahan) => {
-  const validation = validate(searchBahanValidation, namaBahan)
+  const validation = validate(getSearchBahanValidation, namaBahan)
   const bahan = await prismaClient.bahan.findMany({
     where: {
       name: {
         contains: namaBahan,
-        mode: "insensitive"
       }
     },
     select: {
@@ -49,7 +47,6 @@ const searchBahan = async (namaBahan) => {
   if (!bahan) {
     throw new ResponseError(404, "Bahan is Not Found")
   }
-
   return bahan
 }
 

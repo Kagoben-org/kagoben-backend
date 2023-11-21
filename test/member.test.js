@@ -4,22 +4,22 @@ import { prismaClient } from "../src/app/database"
 
 
 
-describe('POST /api/member', () => {
+describe('POST /api/register', () => {
 
-  afterEach(async () => {
-    await prismaClient.member.delete({
-      where: {
-        id: 1,
-        email: "daffa@gmail.com"
-      }
-    })
-  })
+  // afterEach(async () => {
+  //   await prismaClient.member.delete({
+  //     where: {
+  //       id: 1,
+  //       email: "daffa@gmail.com"
+  //     }
+  //   })
+  // })
 
   it('should can register new member', async () => {
     const result = await supertest(web)
-      .post('/api/member')
+      .post('/api/register')
       .send({
-        email: "daffa1213123124@gmail.com",
+        email: "dafa123@gmail.com",
         username: "Dafasdasfa",
         password: "daffaasda123",
         usia: "203",

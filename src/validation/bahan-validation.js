@@ -6,6 +6,6 @@ const bahanValidation = Joi.object({
   image: Joi.string().max(255).required(),
 })
 
-const searchBahanValidation = Joi.string().max(100).required()
+const getSearchBahanValidation = Joi.string().max(100).required()
 
-export { bahanValidation, searchBahanValidation }
+export { bahanValidation, getSearchBahanValidation }
