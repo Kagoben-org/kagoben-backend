@@ -1,7 +1,7 @@
 import { loginMemberValidation, logoutValidation, registerMemberValidation } from "../validation/member-validation.js"
 import { validate } from "../validation/validation.js"
 import { ResponseError } from "../error/response-error.js"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import { prismaClient } from "../app/database.js"
 import { v4 as uuid } from "uuid"
 

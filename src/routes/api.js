@@ -15,6 +15,6 @@ privateRouter.get("/api/bahan/:namaBahan", bahanController.searchBahan) // get b
 //keranjang
 privateRouter.get("/api/keranjang", keranjangController.getAllKeranjang) // get all keranjang by id
 privateRouter.post("/api/keranjang/create", keranjangController.createKeranjang) // create keranjang
-privateRouter.get("/api/keranjang/:keranjang_id", keranjangController.createKeranjang) //find by kerajang id
+privateRouter.get("/api/keranjang/:keranjangId", keranjangController.findKeranjang) //find by kerajang id
 
 export { privateRouter }

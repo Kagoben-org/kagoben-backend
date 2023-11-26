@@ -48,6 +48,5 @@ model BahanOnKeranjang{
   bahan_id Int
   keranjang Keranjang @relation(fields: [keranjang_id],references: [id])
   bahan Bahan @relation(fields: [bahan_id],references: [id])
-
   @@id([keranjang_id,bahan_id])
 }

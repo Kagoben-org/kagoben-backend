@@ -21,13 +21,13 @@ const createKeranjang = async (req) => {
 }
 
 const findKeranjang = async (req) => {
-  const keranjang_id = req.params.keranjang_id
+  const keranjang_id = req.params.keranjangId
   const member_id = req.member.id
-  validate(findKeranjangValidation, keranjang_id) //id keranjang
 
+  validate(findKeranjangValidation, keranjang_id) //id keranjang
   return await prismaClient.keranjang.findFirst({
     where: {
-      id: keranjang_id,
+      id: parseInt(keranjang_id),
       member_id: member_id
     }
   })
