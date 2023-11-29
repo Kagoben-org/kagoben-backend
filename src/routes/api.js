@@ -17,4 +17,7 @@ privateRouter.get("/api/keranjang", keranjangController.getAllKeranjang) // get 
 privateRouter.post("/api/keranjang/create", keranjangController.createKeranjang) // create keranjang
 privateRouter.get("/api/keranjang/:keranjangId", keranjangController.findKeranjang) //find by kerajang id
 
+privateRouter.post("/api/keranjang/addBahan", keranjangController.addBahanToKeranjang)
+privateRouter.put("/api/keranjang/update", keranjangController.updateKeranjang)
+
 export { privateRouter }

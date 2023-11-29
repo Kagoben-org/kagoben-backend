@@ -14,7 +14,8 @@ const addBahan = async (request) => {
         mode: "insensitive"
       }
     })
-    if (countBahan === 1) {
+    if (countBahan === 1)
+    {
       throw new ResponseError(400, "Bahan Already exist")
     }
 
@@ -44,7 +45,8 @@ const searchBahan = async (namaBahan) => {
     }
   })
 
-  if (!bahan) {
+  if (!bahan)
+  {
     throw new ResponseError(404, "Bahan is Not Found")
   }
   return bahan
