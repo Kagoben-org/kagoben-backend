@@ -1,7 +1,7 @@
 import { loginMemberValidation, logoutValidation, registerMemberValidation } from "../validation/member-validation.js"
 import { validate } from "../validation/validation.js"
 import { ResponseError } from "../error/response-error.js"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import { prismaClient } from "../app/database.js"
 import { v4 as uuid } from "uuid"
 
@@ -17,7 +17,7 @@ const register = async (request) => {
   }
   member.password = await bcrypt.hash(member.password, 10)
 
-  return prismaClient.member.create({
+  return await prismaClient.member.create({
     data: member,
     select: {
       email: true,
@@ -28,7 +28,7 @@ const register = async (request) => {
 
 const login = async (req) => {
   const loginRequest = validate(loginMemberValidation, req)
-  const user = await prismaClient.member.findUnique({
+  const member = await prismaClient.member.findUnique({
     where: {
       email: loginRequest.email
     },
@@ -37,10 +37,10 @@ const login = async (req) => {
       password: true
     }
   })
-  if (!user) {
+  if (!member) {
     throw new ResponseError(401, "Username or Password is wrong")
   }
-  const IsPasswordValid = bcrypt.compare(loginRequest.password, user.password)
+  const IsPasswordValid = bcrypt.compare(loginRequest.password, member.password)
   if (!IsPasswordValid) {
     throw new ResponseError(401, "Username or Password is wrong")
   }
@@ -50,7 +50,7 @@ const login = async (req) => {
       token: token
     },
     where: {
-      email: user.email
+      email: member.email
     }, select: {
       token: true
     }
@@ -58,14 +58,14 @@ const login = async (req) => {
 }
 
 const logout = async (email) => {
-  username = validate(logoutValidation, email)
-  const user = await prismaClient.member.findUnique({
+  validate(logoutValidation, email)
+  const member = await prismaClient.member.findUnique({
     where: {
       email: email
     }
   })
-  if (!user) {
-    throw new ResponseError(404, "User is Not Found")
+  if (!member) {
+    throw new ResponseError(404, "Member is Not Found")
   }
 
   return await prismaClient.member.update({
@@ -74,9 +74,6 @@ const logout = async (email) => {
     },
     data: {
       token: null
-    },
-    select: {
-      usernam: true
     }
   })
 }

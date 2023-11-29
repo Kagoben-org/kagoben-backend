@@ -21,9 +21,9 @@ const login = async (req, res, next) => {
 }
 const logout = async (req, res, next) => {
   try {
-    const result = await memberService.logout(req.body.email)
+    const result = await memberService.logout(req.member.email)
     res.status(200).json({
-      data: result
+      message: "Logout Success"
     })
   } catch (error) {
     next(error)
